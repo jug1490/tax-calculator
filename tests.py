@@ -18,7 +18,6 @@ class TestCalculator(unittest.TestCase):
 
         self.cal = TaxCalculator(self.tax_bracket)
 
-    # BaseClass tests
     def test_low_bracket(self):
         res = self.cal.run(9000)
         etr = res['summary']['effective_tax_rate']
@@ -32,6 +31,13 @@ class TestCalculator(unittest.TestCase):
         tax = res['summary']['tax_owed']
         self.assertEqual(etr, 36.61)
         self.assertEqual(tax, 3294988)
+
+    def test_middle_bracket(self):
+        res = self.cal.run(90000)
+        etr = res['summary']['effective_tax_rate']
+        tax = res['summary']['tax_owed']
+        self.assertEqual(etr, 17.53)
+        self.assertEqual(tax, 15775)
 
 if __name__ == '__main__':
     unittest.main()
