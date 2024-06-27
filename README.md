@@ -1,4 +1,4 @@
-Usage
+## Usage
 
 You can edit tax_brackets.yaml and run below via command prompt
 
