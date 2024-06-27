@@ -2,6 +2,10 @@ from collections import OrderedDict
 from pandas import DataFrame
 from copy import deepcopy
 
+import argparse
+import yaml
+import pprint
+
 '''
 Given a dictionary of tax brackets, calculate tax owed for each bracket and add them up.
 The highest bracket must have a large number such as 1e15
@@ -67,4 +71,20 @@ class TaxCalculator(object):
         })
 
         return result
+    
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Tax calculator')
+    parser.add_argument("--cfg")
+    parser.add_argument("--income")    
+    args = parser.parse_args()
+    cfg = args.cfg or 'tax_brackets.yaml' # default yaml
+    gc = float(args.income or 1) # defaults to 1$ if not given
+
+    with open(cfg, 'r') as stream:
+        tax_brackets = yaml.load(stream, Loader=yaml.Loader)
+
+    cal = TaxCalculator(input_brackets=tax_brackets)
+    res = cal.run(gc)
+    pprint.pprint(res)
+
         
